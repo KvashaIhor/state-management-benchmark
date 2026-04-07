@@ -1,0 +1,39 @@
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/pnpm-lock.yaml
+
+   ▲ Next.js 15.5.0
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1432ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.04 kB         107 kB
+├ ○ /_not-found                            994 B         103 kB
+└ ○ /nested                              1.83 kB         107 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/120-f73605b142df1234.js       45.7 kB
+  ├ chunks/971a5b18-8471b2be2ac7d4f1.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+

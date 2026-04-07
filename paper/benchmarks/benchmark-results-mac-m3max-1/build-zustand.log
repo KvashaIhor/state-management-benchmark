@@ -1,0 +1,35 @@
+
+> state-management-benchmark@0.1.0 build /Users/elenavinogradova/state-management-benchmark
+> next build
+
+   ▲ Next.js 15.5.0
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1260ms
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/9) ...
+   Generating static pages (2/9) 
+   Generating static pages (4/9) 
+   Generating static pages (6/9) 
+ ✓ Generating static pages (9/9)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.62 kB         104 kB
+├ ○ /_not-found                            990 B         103 kB
+├ ○ /atom-family                         4.35 kB         106 kB
+├ ○ /deep                                2.44 kB         104 kB
+├ ƒ /k-consumer                          2.59 kB         104 kB
+├ ○ /multi-panel                         2.34 kB         104 kB
+└ ○ /nested                              2.41 kB         104 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/688-91b801887743150b.js       45.4 kB
+  ├ chunks/ccdb642b-322955dc5953381c.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

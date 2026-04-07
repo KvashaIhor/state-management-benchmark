@@ -1,0 +1,203 @@
+{
+  "config": {
+    "configFile": "/Users/kvashaihor/Projects/state-management-benchmark/playwright.config.ts",
+    "rootDir": "/Users/kvashaihor/Projects/state-management-benchmark/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "results/playwright-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/kvashaihor/Projects/state-management-benchmark/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/kvashaihor/Projects/state-management-benchmark/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.51.0",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm dev",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "benchmark.spec.ts",
+      "file": "benchmark.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[jotai] Multi-panel cross-slice isolation (RQ11--RQ13)",
+          "file": "benchmark.spec.ts",
+          "line": 597,
+          "column": 6,
+          "specs": [
+            {
+              "title": "RQ11 — counter: 50 increments → PanelA=50, PanelB=0, PanelC=0",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3174,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n[jotai] RQ11 multi-panel counter — 50 increments\n  PanelA renders : 50  ← subscribed to counter; should be 50\n  PanelB renders : 0  ← subscribed to filter/sort/rows; should be 0 (selector-based)\n  PanelC renders : 0  ← subscribed to selection; should be 0 (selector-based)\n  Wall-clock     : 1672 ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-07T07:33:49.160Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fd0f79bca92272c89f59-8c8d937b1dca365a5277",
+              "file": "benchmark.spec.ts",
+              "line": 605,
+              "column": 7
+            },
+            {
+              "title": "RQ12 — filter: typing 5 chars → PanelA=0, PanelB=5, PanelC=0",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1169,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n[jotai] RQ12 multi-panel filter — typing \"Alpha\" (5 keystrokes)\n  PanelA renders : 0  ← subscribed to counter; should be 0 (selector-based)\n  PanelB renders : 5  ← subscribed to filter/sort/rows; should be 5\n  PanelC renders : 0  ← subscribed to selection; should be 0 (selector-based)\n  Wall-clock     : 294 ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-07T07:33:52.430Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fd0f79bca92272c89f59-e288385f6133b79f7be6",
+              "file": "benchmark.spec.ts",
+              "line": 636,
+              "column": 7
+            },
+            {
+              "title": "RQ13 — selection: 20 row-0 toggles → PanelA=0, PanelB=0, PanelC=20",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1631,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n[jotai] RQ13 multi-panel selection — 20 row-0 toggles\n  PanelA renders : 0  ← subscribed to counter; should be 0 (selector-based)\n  PanelB renders : 0  ← subscribed to filter/sort/rows; should be 0 (selector-based)\n  PanelC renders : 20  ← subscribed to selection; should be 20\n  Wall-clock     : 664 ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-07T07:33:53.602Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fd0f79bca92272c89f59-587c4eb9ec1d3696f7df",
+              "file": "benchmark.spec.ts",
+              "line": 665,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-07T07:33:45.946Z",
+    "duration": 9336.313,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

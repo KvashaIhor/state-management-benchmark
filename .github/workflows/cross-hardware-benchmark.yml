@@ -1,0 +1,88 @@
+name: Cross-hardware timing replication
+
+# Run manually (workflow_dispatch) or automatically on changes to
+# benchmark-relevant files. Results are uploaded as artifacts and can
+# be downloaded to add a cross-hardware row to Table IV of the paper.
+
+on:
+  workflow_dispatch:
+    inputs:
+      timing_runs:
+        description: 'Number of timing runs per scenario (default: 20)'
+        required: false
+        default: '20'
+  push:
+    branches: [main]
+    paths:
+      - 'tests/**'
+      - 'store/**'
+      - 'components/**'
+      - 'app/**'
+      - 'scripts/**'
+      - 'next.config.mjs'
+      - 'package.json'
+
+jobs:
+  benchmark:
+    strategy:
+      fail-fast: false
+      matrix:
+        # ubuntu-latest  = 2-core x86-64 Linux  (AMD/Intel Xeon) — primary replication target
+        # macos-14       = Apple M1 (arm64) — same ISA family as M5 Max test machine
+        os: [ubuntu-latest, macos-14]
+
+    runs-on: ${{ matrix.os }}
+    # ubuntu-latest (2-core x86-64) needs ~60 min for 4 libraries end-to-end;
+    # macos-14 (3-core arm64) needs ~30 min. 90 min gives a comfortable buffer.
+    timeout-minutes: 90
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers (Chromium only)
+        run: pnpm playwright install chromium --with-deps
+
+      # Run the full benchmark suite for all four libraries.
+      # TIMING_RUNS=20 matches the paper's N=20 protocol.
+      # BENCHMARK_RUNS=3 performs three clean builds per library to
+      # confirm webpack output determinism (consistent with §3.6).
+      - name: Run benchmark
+        env:
+          TIMING_RUNS: ${{ github.event.inputs.timing_runs || '10' }}
+          # BENCHMARK_RUNS=1 on CI: bundle determinism is established on M5 Max (§3.6);
+          # CI cross-hardware runs just need one build per library to produce render counts
+          # and timing data. Avoids tripling the already-long ubuntu build time.
+          BENCHMARK_RUNS: '1'
+        run: bash scripts/run-benchmarks.sh
+
+      # Print CI summary so the values appear in the Actions log
+      - name: Compute confidence intervals (Table IV replication)
+        run: python3 scripts/compute_ci.py
+
+      # Upload all results for offline analysis / paper supplementary material
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results-${{ matrix.os }}-${{ github.sha }}
+          path: |
+            results/playwright-*.log
+            results/bundle-sizes.csv
+            results/chunks-*.txt
+          retention-days: 90

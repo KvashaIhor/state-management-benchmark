@@ -1,0 +1,149 @@
+
+Running 12 tests using 1 worker
+
+
+[redux] counter — 50 increments
+  Dashboard renders : 50
+  DataTable renders : 0  ← ideally 0 (counter doesn't affect table)
+  DataTable span    : 0.0 ms (render-span from first to last record)
+  Wall-clock        : 1689 ms
+  ✓  1 [chromium] › tests/benchmark.spec.ts:122:7 › [redux] State Management Benchmarks › RQ1 — counter: 50 increments → render count (2.3s)
+
+[redux] filter — typing "Alpha" (5 keystrokes)
+  Dashboard renders : 5
+  DataTable renders : 5
+  DataTable span    : 212.3 ms
+  Wall-clock        : 281 ms
+  ✓  2 [chromium] › tests/benchmark.spec.ts:158:7 › [redux] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count (849ms)
+
+[redux] selection — 20 row clicks
+  Dashboard renders : 20
+  DataTable renders : 20
+  DataTable span    : 627.5 ms
+  Wall-clock        : 674 ms
+  ✓  3 [chromium] › tests/benchmark.spec.ts:182:7 › [redux] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count (1.2s)
+
+[redux] sort — 10 direction toggles
+  Dashboard renders : 10
+  DataTable renders : 10
+  DataTable span    : 296.8 ms
+  Wall-clock        : 346 ms
+  ✓  4 [chromium] › tests/benchmark.spec.ts:208:7 › [redux] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count (928ms)
+
+[redux] rows — 5 dataset refreshes
+  Dashboard renders : 0
+  DataTable renders : 5  ← all libraries subscribe to rows; all re-render
+  DataTable span    : 129.2 ms
+  Wall-clock        : 169 ms
+  ✘  5 [chromium] › tests/benchmark.spec.ts:234:7 › [redux] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count (748ms)
+
+[redux] nested counter — 50 increments (Shell → Panel → DataTable, depth 3)
+  Shell renders     : 50   ← uses useAppStore(); re-renders on every counter change
+  Panel renders     : 0   ← no React.memo; cascades from Shell's 50 re-renders
+  DataTable renders : 0  ← React.memo leaf; ideally 0 for selector-based libs
+  DataTable span    : 0.0 ms
+  Wall-clock        : 1691 ms
+  ✘  6 [chromium] › tests/benchmark.spec.ts:270:7 › [redux] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) (2.8s)
+
+[redux] patch — 10 single-field patches (row-0 value++)
+  Dashboard renders : 10
+  DataTable renders : 10  ← all libraries subscribe to rows ref; all re-render
+  DataTable span    : 297.5 ms
+  Wall-clock        : 340 ms
+  Note: Redux immer preserves unchanged row object references (structural sharing),
+        but DataTable subscribes to the rows *array* reference not individual rows.
+        A single-field patch replaces the array ref in all four libraries → 10 renders.
+  ✓  7 [chromium] › tests/benchmark.spec.ts:330:7 › [redux] State Management Benchmarks › RQ7 — partial row patch: 10 single-field patches → render count (910ms)
+
+[redux] RQ8 K=3, 50 counter increments
+  Per-consumer renders : 0, 0, 0
+  Total surplus        : 0  ← Context: K×50=150; others: 0
+  ✓  8 [chromium] › tests/benchmark.spec.ts:377:7 › [redux] State Management Benchmarks › RQ8-K3 — 3 consumers, 50 counter increments → total surplus render count (2.8s)
+
+[redux] RQ8 K=10, 50 counter increments
+  Per-consumer renders : 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  Total surplus        : 0  ← Context: K×50=500; others: 0
+  ✓  9 [chromium] › tests/benchmark.spec.ts:404:7 › [redux] State Management Benchmarks › RQ8-K10 — 10 consumers, 50 counter increments → total surplus render count (2.8s)
+
+[redux] RQ9 deep tree — 50 increments (DeepShell → Layer1 → Layer2 → Layer3 → DataTable, depth 5)
+  DeepShell renders : 50
+  Layer1 renders    : 0
+  Layer2 renders    : 0
+  Layer3 renders    : 0
+  DataTable renders : 0  ← ideally 0 for selector-based libs
+  ✘  10 [chromium] › tests/benchmark.spec.ts:445:7 › [redux] State Management Benchmarks › RQ9 — deep tree: 50 counter increments → isolation at leaf (depth 5) (2.8s)
+
+[RQ10] Jotai atom families — 10 patches on row-0
+  AtomTable wrapper   : 0  ← should be 0 (stable rowIds)
+  RowCell-row-0       : 10  ← should be 10 (patched row)
+  RowCell-row-1       : 0  ← should be 0 (unpatched)
+  RowCell-row-50      : 0  ← should be 0 (unpatched)
+  RowCell-row-99      : 0  ← should be 0 (unpatched)
+  Total RowCell renders: 10  ← should be 10 (only patched row)
+  ✓  11 [chromium] › tests/benchmark.spec.ts:503:7 › RQ10 — Jotai atom families: per-row render isolation › RQ10 — 10 patches on row-0 → only RowCell-row-0 re-renders (960ms)
+
+[redux] TIMING RQ1 DataTable render-span  N=20 total, N=19 steady-state:  mean=0.0ms  95%CI=[0.0,0.0]  median=0.0ms  IQR=±0.0ms  raw=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+
+[redux] TIMING RQ2 DataTable render-span  N=20 total, N=19 steady-state:  mean=212.1ms  95%CI=[211.2,213.0]  median=212.3ms  IQR=±3.3ms  raw=[213.8,214.9,214.5,212.1,212.5,211.0,210.4,209.2,213.3,213.6,212.3,209.4,213.7,212.1,208.9,213.5,210.8,214.2,210.1]
+
+[redux] TIMING RQ3 DataTable render-span  N=20 total, N=19 steady-state:  mean=631.3ms  95%CI=[630.8,631.8]  median=631.8ms  IQR=±1.8ms  raw=[630.2,629.4,630.8,631.8,631.8,629.7,631.3,632.3,630.4,631.9,629.8,631.9,631.1,632.4,631.4,632.2,632.7,632.2,632.0]
+
+[redux] TIMING RQ4 DataTable render-span  N=20 total, N=19 steady-state:  mean=297.2ms  95%CI=[296.6,297.8]  median=297.1ms  IQR=±2.1ms  raw=[296.2,296.9,295.7,297.4,298.6,296.1,299.1,297.9,296.1,297.9,297.1,298.6,295.1,296.7,296.4,298.2,298.0,298.8,295.8]
+
+[redux] TIMING RQ5 DataTable render-span  N=20 total, N=19 steady-state:  mean=131.4ms  95%CI=[130.9,131.8]  median=131.7ms  IQR=±1.7ms  raw=[131.1,132.2,131.9,130.4,130.1,131.9,130.9,131.9,132.3,132.7,130.5,132.5,130.2,131.1,129.0,131.2,131.8,131.7,132.4]
+  ✓  12 [chromium] › tests/benchmark.spec.ts:575:7 › [redux] Render-span timing (N=20 runs, order randomized) › Timing — RQ1–RQ5 DataTable spans (randomized scenario order) (1.9m)
+
+
+  1) [chromium] › tests/benchmark.spec.ts:234:7 › [redux] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m5[39m
+    Received: [31m0[39m
+
+      256 |     // refreshRows() replaces the array reference → all implementations re-render.
+      257 |     // This exercises the rows subscription path, which RQ1–RQ4 leave unexercised.
+    > 258 |     expect(dashboardRenders).toBe(5)
+          |                              ^
+      259 |     expect(tableRenders).toBe(5)
+      260 |   })
+      261 |
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:258:30
+
+  2) [chromium] › tests/benchmark.spec.ts:270:7 › [redux] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m50[39m
+    Received: [31m0[39m
+
+      303 |     // Panel has NO React.memo and no props from Shell — React's reconciliation
+      304 |     // cascade enters Panel's render function on every Shell re-render.
+    > 305 |     expect(panelRenders).toBe(50)
+          |                          ^
+      306 |
+      307 |     // DataTable is React.memo-wrapped with zero props. Even though Panel re-renders,
+      308 |     // React's memo bail-out prevents DataTable's render body from executing when
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:305:26
+
+  3) [chromium] › tests/benchmark.spec.ts:445:7 › [redux] State Management Benchmarks › RQ9 — deep tree: 50 counter increments → isolation at leaf (depth 5) 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m50[39m
+    Received: [31m0[39m
+
+      471 |
+      472 |     expect(shellRenders).toBe(50)
+    > 473 |     expect(layer1Renders).toBe(50)
+          |                           ^
+      474 |     expect(layer2Renders).toBe(50)
+      475 |     expect(layer3Renders).toBe(50)
+      476 |
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:473:27
+
+  3 failed
+    [chromium] › tests/benchmark.spec.ts:234:7 › [redux] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count 
+    [chromium] › tests/benchmark.spec.ts:270:7 › [redux] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) 
+    [chromium] › tests/benchmark.spec.ts:445:7 › [redux] State Management Benchmarks › RQ9 — deep tree: 50 counter increments → isolation at leaf (depth 5) 
+  9 passed (2.3m)

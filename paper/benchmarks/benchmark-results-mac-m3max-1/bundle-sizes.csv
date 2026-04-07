@@ -1,0 +1,8 @@
+run,library,route_size_kb,first_load_kb,shared_kb,library_delta_kb,gzip_total_bytes,gzip_total_kb
+1,redux,2.24,112,102,10.00,261068,254.95
+1,redux-idiomatic,2.30,112,102,10.00,261499,255.37
+1,zustand,2.62,104,102,2.00,255516,249.53
+1,jotai,2.18,107,102,5.00,253133,247.20
+1,context,2.35,104,102,2.00,253951,248.00
+1,valtio,2.34,105,102,3.00,254941,248.97
+1,mobx,2.23,119,102,17.00,268765,262.47

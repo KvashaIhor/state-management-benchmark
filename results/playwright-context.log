@@ -1,0 +1,69 @@
+
+Running 8 tests using 1 worker
+
+
+[context] counter — 50 increments
+  Dashboard renders : 50
+  DataTable renders : 50  ← ideally 0 (counter doesn't affect table)
+  DataTable span    : 1631.0 ms (render-span from first to last record)
+  Wall-clock        : 1675 ms
+  ✓  1 [chromium] › tests/benchmark.spec.ts:122:7 › [context] State Management Benchmarks › RQ1 — counter: 50 increments → render count (2.3s)
+
+[context] filter — typing "Alpha" (5 keystrokes)
+  Dashboard renders : 5
+  DataTable renders : 5
+  DataTable span    : 210.4 ms
+  Wall-clock        : 282 ms
+  ✓  2 [chromium] › tests/benchmark.spec.ts:158:7 › [context] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count (844ms)
+
+[context] selection — 20 row clicks
+  Dashboard renders : 20
+  DataTable renders : 20
+  DataTable span    : 646.9 ms
+  Wall-clock        : 681 ms
+  ✓  3 [chromium] › tests/benchmark.spec.ts:182:7 › [context] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count (1.2s)
+
+[context] sort — 10 direction toggles
+  Dashboard renders : 10
+  DataTable renders : 10
+  DataTable span    : 313.0 ms
+  Wall-clock        : 351 ms
+  ✓  4 [chromium] › tests/benchmark.spec.ts:208:7 › [context] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count (932ms)
+
+[context] rows — 5 dataset refreshes
+  Dashboard renders : 5
+  DataTable renders : 5  ← all libraries subscribe to rows; all re-render
+  DataTable span    : 130.9 ms
+  Wall-clock        : 166 ms
+  ✓  5 [chromium] › tests/benchmark.spec.ts:234:7 › [context] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count (744ms)
+
+[context] nested counter — 50 increments (Shell → Panel → DataTable, depth 3)
+  Shell renders     : 50   ← uses useAppStore(); re-renders on every counter change
+  Panel renders     : 50   ← no React.memo; cascades from Shell's 50 re-renders
+  DataTable renders : 50  ← React.memo leaf; ideally 0 for selector-based libs
+  DataTable span    : 1631.0 ms
+  Wall-clock        : 1683 ms
+  ✓  6 [chromium] › tests/benchmark.spec.ts:270:7 › [context] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) (2.8s)
+
+[context] patch — 10 single-field patches (row-0 value++)
+  Dashboard renders : 10
+  DataTable renders : 10  ← all libraries subscribe to rows ref; all re-render
+  DataTable span    : 298.5 ms
+  Wall-clock        : 335 ms
+  Note: Redux immer preserves unchanged row object references (structural sharing),
+        but DataTable subscribes to the rows *array* reference not individual rows.
+        A single-field patch replaces the array ref in all four libraries → 10 renders.
+  ✓  7 [chromium] › tests/benchmark.spec.ts:330:7 › [context] State Management Benchmarks › RQ7 — partial row patch: 10 single-field patches → render count (897ms)
+
+[context] TIMING RQ1 DataTable render-span  N=20 total, N=19 steady-state:  mean=1632.1ms  95%CI=[1631.6,1632.5]  median=1632.4ms  IQR=±1.5ms  raw=[1631.0,1632.4,1631.5,1631.5,1630.6,1633.6,1631.6,1631.0,1630.3,1632.7,1632.8,1633.5,1632.7,1632.7,1632.6,1632.4,1631.2,1632.1,1633.2]
+
+[context] TIMING RQ2 DataTable render-span  N=20 total, N=19 steady-state:  mean=213.0ms  95%CI=[212.3,213.7]  median=213.2ms  IQR=±2.1ms  raw=[214.5,210.3,214.6,213.9,211.2,212.9,215.3,212.1,212.6,213.8,212.1,211.7,212.0,214.1,213.6,215.1,210.7,213.2,213.3]
+
+[context] TIMING RQ3 DataTable render-span  N=20 total, N=19 steady-state:  mean=631.9ms  95%CI=[631.2,632.5]  median=631.7ms  IQR=±2.5ms  raw=[630.1,630.6,632.8,630.2,632.0,632.2,633.6,633.6,632.3,633.7,631.1,631.7,630.4,631.4,631.2,630.6,633.1,633.9,630.7]
+
+[context] TIMING RQ4 DataTable render-span  N=20 total, N=19 steady-state:  mean=298.1ms  95%CI=[296.3,299.8]  median=297.3ms  IQR=±1.3ms  raw=[297.3,297.7,298.2,298.1,297.1,295.7,296.7,297.3,296.3,299.8,298.0,296.0,296.1,312.8,296.9,297.5,298.0,296.9,296.8]
+
+[context] TIMING RQ5 DataTable render-span  N=20 total, N=19 steady-state:  mean=131.1ms  95%CI=[130.6,131.5]  median=131.0ms  IQR=±1.3ms  raw=[131.7,131.1,130.7,131.1,132.4,131.0,130.8,132.9,130.4,131.9,130.2,131.4,129.3,130.8,131.7,130.4,131.9,129.9,130.4]
+  ✓  8 [chromium] › tests/benchmark.spec.ts:393:7 › [context] Render-span timing (N=20 runs, order randomized) › Timing — RQ1–RQ5 DataTable spans (randomized scenario order) (1.9m)
+
+  8 passed (2.1m)

@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+next-env.d.ts
+
+# TypeScript build artifacts
+tsconfig.tsbuildinfo
+
+# Lockfile — project uses pnpm, package-lock.json is redundant
+package-lock.json
+
+# Test artifacts
+test-results/
+playwright-report/
+pw-artifacts-*/
+results/pw-artifacts-*/
+
+# OS
+.DS_Store
+
+# Environment
+.env*.local
+
+# LaTeX build artifacts
+paper/**/*.aux
+paper/**/*.log
+paper/**/*.synctex.gz
+paper/**/*.blg
+paper/**/*.bbl
+paper/**/*.out
+paper/**/*.toc
+
+# Keep raw benchmark replication data logs
+!paper/benchmarks/**/*.log
+
+# Paper drafting / internal planning — not part of the methodology artifact
+plans/
+paper/draft.md
+paper/paper-text.md
+paper/OUTLINE.md
+
+# Reference PDFs — copyrighted, not redistributable
+paper/references/
+
+# IEEE blank template files bundled with the download (not our content)
+paper/IEEE-conference-template-062824/IEEE-conference-template-062824.tex
+paper/IEEE-conference-template-062824/IEEE-conference-template-062824.pdf
+paper/IEEE-conference-template-062824/IEEEtran_HOWTO.pdf
+
+# Generated figures (reproducible from scripts)
+paper/figure1.pdf
+paper/figure2.pdf

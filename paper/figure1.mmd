@@ -1,0 +1,8 @@
+graph TD
+  subgraph primary["RQ1–RQ5 · 2-level tree"]
+    D["Dashboard\n(useAppStore)"] -->|no props| DT["DataTable · React.memo\n(useTableStore)"]
+  end
+  subgraph nested["RQ6 · 3-level tree"]
+    S["Shell\n(useAppStore)"] -->|no props| P["Panel\n(no React.memo)"]
+    P -->|no props| DT2["DataTable · React.memo\n(useTableStore)"]
+  end

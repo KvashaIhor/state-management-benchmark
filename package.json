@@ -1,0 +1,38 @@
+{
+  "name": "state-management-benchmark",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "analyze": "ANALYZE=true next build",
+    "test:e2e": "playwright test",
+    "benchmark": "bash scripts/run-benchmarks.sh",
+    "benchmark:firefox": "TIMING_RUNS=1 bash scripts/run-benchmarks.sh",
+    "benchmark:webkit": "WEBKIT_ONLY=1 WEBKIT_RUN=1 bash scripts/run-benchmarks.sh",
+    "benchmark:compiler": "COMPILER_ONLY=1 COMPILER_RUN=1 TIMING_RUNS=20 bash scripts/run-benchmarks.sh",
+    "benchmark:compiler:context": "COMPILER_ONLY=1 COMPILER_RUN=1 COMPILER_LIBS=context TIMING_RUNS=20 bash scripts/run-benchmarks.sh"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "2.5.0",
+    "jotai": "2.12.0",
+    "mobx": "^6.15.0",
+    "mobx-react-lite": "^4.1.1",
+    "next": "15.5.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-redux": "9.2.0",
+    "valtio": "^2.3.1",
+    "zustand": "5.0.3"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "15.5.0",
+    "@playwright/test": "1.51.0",
+    "@types/node": "22.0.0",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "typescript": "~5.7"
+  }
+}

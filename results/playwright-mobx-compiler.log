@@ -1,0 +1,289 @@
+
+Running 12 tests using 1 worker
+
+  ✘  1 [chromium] › tests/benchmark.spec.ts:122:7 › [mobx] State Management Benchmarks › RQ1 — counter: 50 increments → render count (7.3s)
+
+[mobx] filter — typing "Alpha" (5 keystrokes)
+  Dashboard renders : 0
+  DataTable renders : 0
+  DataTable span    : 0.0 ms
+  Wall-clock        : 286 ms
+  ✘  2 [chromium] › tests/benchmark.spec.ts:158:7 › [mobx] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count (896ms)
+  ✘  3 [chromium] › tests/benchmark.spec.ts:182:7 › [mobx] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count (6.3s)
+
+[mobx] sort — 10 direction toggles
+  Dashboard renders : 0
+  DataTable renders : 0
+  DataTable span    : 0.0 ms
+  Wall-clock        : 342 ms
+  ✘  4 [chromium] › tests/benchmark.spec.ts:208:7 › [mobx] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count (940ms)
+
+[mobx] rows — 5 dataset refreshes
+  Dashboard renders : 0
+  DataTable renders : 0  ← all libraries subscribe to rows; all re-render
+  DataTable span    : 0.0 ms
+  Wall-clock        : 181 ms
+  ✘  5 [chromium] › tests/benchmark.spec.ts:234:7 › [mobx] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count (778ms)
+  ✘  6 [chromium] › tests/benchmark.spec.ts:270:7 › [mobx] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) (7.8s)
+  ✘  7 [chromium] › tests/benchmark.spec.ts:330:7 › [mobx] State Management Benchmarks › RQ7 — partial row patch: 10 single-field patches → render count (5.9s)
+  ✘  8 [chromium] › tests/benchmark.spec.ts:377:7 › [mobx] State Management Benchmarks › RQ8-K3 — 3 consumers, 50 counter increments → total surplus render count (7.8s)
+  ✘  9 [chromium] › tests/benchmark.spec.ts:404:7 › [mobx] State Management Benchmarks › RQ8-K10 — 10 consumers, 50 counter increments → total surplus render count (8.0s)
+  ✘  10 [chromium] › tests/benchmark.spec.ts:445:7 › [mobx] State Management Benchmarks › RQ9 — deep tree: 50 counter increments → isolation at leaf (depth 5) (7.8s)
+
+[RQ10] Jotai atom families — 10 patches on row-0
+  AtomTable wrapper   : 0  ← should be 0 (stable rowIds)
+  RowCell-row-0       : 10  ← should be 10 (patched row)
+  RowCell-row-1       : 0  ← should be 0 (unpatched)
+  RowCell-row-50      : 0  ← should be 0 (unpatched)
+  RowCell-row-99      : 0  ← should be 0 (unpatched)
+  Total RowCell renders: 10  ← should be 10 (only patched row)
+  ✓  11 [chromium] › tests/benchmark.spec.ts:503:7 › RQ10 — Jotai atom families: per-row render isolation › RQ10 — 10 patches on row-0 → only RowCell-row-0 re-renders (1.0s)
+  ✘  12 [chromium] › tests/benchmark.spec.ts:575:7 › [mobx] Render-span timing (N=20 runs, order randomized) › Timing — RQ1–RQ5 DataTable spans (randomized scenario order) (8.8s)
+
+
+  1) [chromium] › tests/benchmark.spec.ts:122:7 › [mobx] State Management Benchmarks › RQ1 — counter: 50 increments → render count 
+
+    Error: [31mTimed out 5000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByTestId('counter')
+    Expected string: [32m"[7m5[27m0"[39m
+    Received string: [31m"0"[39m
+    Call log:
+    [2m  - expect.toHaveText with timeout 5000ms[22m
+    [2m  - waiting for getByTestId('counter')[22m
+    [2m    9 × locator resolved to <span data-testid="counter">0</span>[22m
+    [2m      - unexpected value "0"[22m
+
+
+      128 |     }
+      129 |
+    > 130 |     await expect(page.getByTestId('counter')).toHaveText('50')
+          |                                               ^
+      131 |     const wallMs = Date.now() - t0
+      132 |     const records = await getRenderRecords(page)
+      133 |
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:130:47
+
+  2) [chromium] › tests/benchmark.spec.ts:158:7 › [mobx] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m5[39m
+    Received: [31m0[39m
+
+      175 |   Wall-clock        : ${wallMs} ms`)
+      176 |
+    > 177 |     expect(dashboardRenders).toBe(5) // Dashboard re-renders once per keystroke
+          |                              ^
+      178 |     expect(tableRenders).toBe(5)     // one render per keystroke (sequential, not batched)
+      179 |   })
+      180 |
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:177:30
+
+  3) [chromium] › tests/benchmark.spec.ts:182:7 › [mobx] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count 
+
+    Error: [31mTimed out 5000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByTestId('selected-count')
+    Expected string: [32m"Selected: [7m2[27m0"[39m
+    Received string: [31m"Selected: 0"[39m
+    Call log:
+    [2m  - expect.toHaveText with timeout 5000ms[22m
+    [2m  - waiting for getByTestId('selected-count')[22m
+    [2m    9 × locator resolved to <p data-testid="selected-count">…</p>[22m
+    [2m      - unexpected value "Selected: 0"[22m
+
+
+      186 |     }
+      187 |
+    > 188 |     await expect(page.getByTestId('selected-count')).toHaveText('Selected: 20')
+          |                                                      ^
+      189 |     const wallMs = Date.now() - t0
+      190 |     const records = await getRenderRecords(page)
+      191 |
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:188:54
+
+  4) [chromium] › tests/benchmark.spec.ts:208:7 › [mobx] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m10[39m
+    Received: [31m0[39m
+
+      227 |   Wall-clock        : ${wallMs} ms`)
+      228 |
+    > 229 |     expect(dashboardRenders).toBe(10) // Dashboard re-renders once per sort toggle
+          |                              ^
+      230 |     expect(tableRenders).toBe(10)     // one render per toggle
+      231 |   })
+      232 |
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:229:30
+
+  5) [chromium] › tests/benchmark.spec.ts:234:7 › [mobx] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m5[39m
+    Received: [31m0[39m
+
+      256 |     // refreshRows() replaces the array reference → all implementations re-render.
+      257 |     // This exercises the rows subscription path, which RQ1–RQ4 leave unexercised.
+    > 258 |     expect(dashboardRenders).toBe(5)
+          |                              ^
+      259 |     expect(tableRenders).toBe(5)
+      260 |   })
+      261 |
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:258:30
+
+  6) [chromium] › tests/benchmark.spec.ts:270:7 › [mobx] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) 
+
+    Error: [31mTimed out 5000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByTestId('counter')
+    Expected string: [32m"[7m5[27m0"[39m
+    Received string: [31m"0"[39m
+    Call log:
+    [2m  - expect.toHaveText with timeout 5000ms[22m
+    [2m  - waiting for getByTestId('counter')[22m
+    [2m    9 × locator resolved to <span data-testid="counter">0</span>[22m
+    [2m      - unexpected value "0"[22m
+
+
+      281 |     }
+      282 |
+    > 283 |     await expect(page.getByTestId('counter')).toHaveText('50')
+          |                                               ^
+      284 |     const wallMs = Date.now() - t0
+      285 |     const records = await getRenderRecords(page)
+      286 |
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:283:47
+
+  7) [chromium] › tests/benchmark.spec.ts:330:7 › [mobx] State Management Benchmarks › RQ7 — partial row patch: 10 single-field patches → render count 
+
+    Error: [31mTimed out 5000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('[data-testid="row-row-0"] td').nth(2)
+    Expected string: [32m"[7m1[27m0"[39m
+    Received string: [31m"0"[39m
+    Call log:
+    [2m  - expect.toHaveText with timeout 5000ms[22m
+    [2m  - waiting for locator('[data-testid="row-row-0"] td').nth(2)[22m
+    [2m    9 × locator resolved to <td>0</td>[22m
+    [2m      - unexpected value "0"[22m
+
+
+      341 |     await expect(
+      342 |       page.locator('[data-testid="row-row-0"] td').nth(2)
+    > 343 |     ).toHaveText('10')
+          |       ^
+      344 |
+      345 |     const wallMs = Date.now() - t0
+      346 |     const records = await getRenderRecords(page)
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:343:7
+
+  8) [chromium] › tests/benchmark.spec.ts:377:7 › [mobx] State Management Benchmarks › RQ8-K3 — 3 consumers, 50 counter increments → total surplus render count 
+
+    Error: [31mTimed out 5000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByTestId('counter')
+    Expected string: [32m"[7m5[27m0"[39m
+    Received string: [31m"0"[39m
+    Call log:
+    [2m  - expect.toHaveText with timeout 5000ms[22m
+    [2m  - waiting for getByTestId('counter')[22m
+    [2m    9 × locator resolved to <span data-testid="counter">0</span>[22m
+    [2m      - unexpected value "0"[22m
+
+
+      383 |     const btn = page.getByTestId('increment')
+      384 |     for (let i = 0; i < 50; i++) await btn.click()
+    > 385 |     await expect(page.getByTestId('counter')).toHaveText('50')
+          |                                               ^
+      386 |
+      387 |     const records = await getRenderRecords(page)
+      388 |     const perConsumer = Array.from({ length: K }, (_, i) => countRenders(records, `DataTable-${i}`))
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:385:47
+
+  9) [chromium] › tests/benchmark.spec.ts:404:7 › [mobx] State Management Benchmarks › RQ8-K10 — 10 consumers, 50 counter increments → total surplus render count 
+
+    Error: [31mTimed out 5000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByTestId('counter')
+    Expected string: [32m"[7m5[27m0"[39m
+    Received string: [31m"0"[39m
+    Call log:
+    [2m  - expect.toHaveText with timeout 5000ms[22m
+    [2m  - waiting for getByTestId('counter')[22m
+    [2m    9 × locator resolved to <span data-testid="counter">0</span>[22m
+    [2m      - unexpected value "0"[22m
+
+
+      410 |     const btn = page.getByTestId('increment')
+      411 |     for (let i = 0; i < 50; i++) await btn.click()
+    > 412 |     await expect(page.getByTestId('counter')).toHaveText('50')
+          |                                               ^
+      413 |
+      414 |     const records = await getRenderRecords(page)
+      415 |     const perConsumer = Array.from({ length: K }, (_, i) => countRenders(records, `DataTable-${i}`))
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:412:47
+
+  10) [chromium] › tests/benchmark.spec.ts:445:7 › [mobx] State Management Benchmarks › RQ9 — deep tree: 50 counter increments → isolation at leaf (depth 5) 
+
+    Error: [31mTimed out 5000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByTestId('counter')
+    Expected string: [32m"[7m5[27m0"[39m
+    Received string: [31m"0"[39m
+    Call log:
+    [2m  - expect.toHaveText with timeout 5000ms[22m
+    [2m  - waiting for getByTestId('counter')[22m
+    [2m    9 × locator resolved to <span data-testid="counter">0</span>[22m
+    [2m      - unexpected value "0"[22m
+
+
+      453 |     }
+      454 |
+    > 455 |     await expect(page.getByTestId('counter')).toHaveText('50')
+          |                                               ^
+      456 |     const records = await getRenderRecords(page)
+      457 |
+      458 |     const shellRenders  = countRenders(records, 'DeepShell')
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:455:47
+
+  11) [chromium] › tests/benchmark.spec.ts:575:7 › [mobx] Render-span timing (N=20 runs, order randomized) › Timing — RQ1–RQ5 DataTable spans (randomized scenario order) 
+
+    Error: [31mTimed out 5000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByTestId('counter')
+    Expected string: [32m"[7m5[27m0"[39m
+    Received string: [31m"0"[39m
+    Call log:
+    [2m  - expect.toHaveText with timeout 5000ms[22m
+    [2m  - waiting for getByTestId('counter')[22m
+    [2m    9 × locator resolved to <span data-testid="counter">0</span>[22m
+    [2m      - unexpected value "0"[22m
+
+
+      585 |           const btn = p.getByTestId('increment')
+      586 |           for (let i = 0; i < 50; i++) await btn.click()
+    > 587 |           await expect(p.getByTestId('counter')).toHaveText('50')
+          |                                                  ^
+      588 |           return getScenarioDuration(await getRenderRecords(p), 'DataTable')
+      589 |         },
+      590 |       },
+        at Object.run (/Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:587:50)
+        at /Users/kvashaihor/Projects/state-management-benchmark/tests/benchmark.spec.ts:643:39
+
+  11 failed
+    [chromium] › tests/benchmark.spec.ts:122:7 › [mobx] State Management Benchmarks › RQ1 — counter: 50 increments → render count 
+    [chromium] › tests/benchmark.spec.ts:158:7 › [mobx] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count 
+    [chromium] › tests/benchmark.spec.ts:182:7 › [mobx] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count 
+    [chromium] › tests/benchmark.spec.ts:208:7 › [mobx] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count 
+    [chromium] › tests/benchmark.spec.ts:234:7 › [mobx] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count 
+    [chromium] › tests/benchmark.spec.ts:270:7 › [mobx] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) 
+    [chromium] › tests/benchmark.spec.ts:330:7 › [mobx] State Management Benchmarks › RQ7 — partial row patch: 10 single-field patches → render count 
+    [chromium] › tests/benchmark.spec.ts:377:7 › [mobx] State Management Benchmarks › RQ8-K3 — 3 consumers, 50 counter increments → total surplus render count 
+    [chromium] › tests/benchmark.spec.ts:404:7 › [mobx] State Management Benchmarks › RQ8-K10 — 10 consumers, 50 counter increments → total surplus render count 
+    [chromium] › tests/benchmark.spec.ts:445:7 › [mobx] State Management Benchmarks › RQ9 — deep tree: 50 counter increments → isolation at leaf (depth 5) 
+    [chromium] › tests/benchmark.spec.ts:575:7 › [mobx] Render-span timing (N=20 runs, order randomized) › Timing — RQ1–RQ5 DataTable spans (randomized scenario order) 
+  1 passed (1.2m)

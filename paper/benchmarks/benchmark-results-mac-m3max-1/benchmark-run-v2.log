@@ -1,0 +1,860 @@
+
+> state-management-benchmark@0.1.0 benchmark /Users/kvashaihor/Projects/state-management-benchmark
+> bash scripts/run-benchmarks.sh
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: redux  (run 1 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1481ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.02 kB         113 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              1.86 kB         112 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=1 route=2.02kB  first_load=113kB  shared=102kB  library_delta=11.00kB  gzip_total=247.42kB
+→ Starting production server…
+→ Waiting for production server on :3000…
+
+> state-management-benchmark@0.1.0 start /Users/kvashaihor/Projects/state-management-benchmark
+> next start
+
+   ▲ Next.js 15.5.14
+   - Local:        http://localhost:3000
+   - Network:      http://10.0.0.24:3000
+
+ ✓ Starting...
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+ ✓ Ready in 193ms
+→ Running Playwright benchmarks…
+
+Running 6 tests using 1 worker
+
+
+[redux] counter — 50 increments
+  Dashboard renders : 50
+  DataTable renders : 0  ← ideally 0 (counter doesn't affect table)
+  DataTable span    : 0.0 ms (render-span from first to last record)
+  Wall-clock        : 875 ms
+  ✓  1 [chromium] › tests/benchmark.spec.ts:54:7 › [redux] State Management Benchmarks › RQ1 — counter: 50 increments → render count (1.1s)
+
+[redux] filter — typing "Alpha" (5 keystrokes)
+  Dashboard renders : 5
+  DataTable renders : 5
+  DataTable span    : 214.4 ms
+  Wall-clock        : 280 ms
+  ✓  2 [chromium] › tests/benchmark.spec.ts:90:7 › [redux] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count (401ms)
+
+[redux] selection — 20 row clicks
+  Dashboard renders : 20
+  DataTable renders : 20
+  DataTable span    : 346.1 ms
+  Wall-clock        : 359 ms
+  ✓  3 [chromium] › tests/benchmark.spec.ts:114:7 › [redux] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count (476ms)
+
+[redux] sort — 10 direction toggles
+  Dashboard renders : 10
+  DataTable renders : 10
+  DataTable span    : 175.9 ms
+  Wall-clock        : 193 ms
+  ✓  4 [chromium] › tests/benchmark.spec.ts:140:7 › [redux] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count (306ms)
+
+[redux] rows — 5 dataset refreshes
+  Dashboard renders : 5
+  DataTable renders : 5  ← all libraries subscribe to rows; all re-render
+  DataTable span    : 64.2 ms
+  Wall-clock        : 74 ms
+  ✓  5 [chromium] › tests/benchmark.spec.ts:166:7 › [redux] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count (193ms)
+
+[redux] nested counter — 50 increments (Shell → Panel → DataTable, depth 3)
+  Shell renders     : 50   ← uses useAppStore(); re-renders on every counter change
+  Panel renders     : 50   ← no React.memo; cascades from Shell's 50 re-renders
+  DataTable renders : 0  ← React.memo leaf; ideally 0 for selector-based libs
+  DataTable span    : 0.0 ms
+  Wall-clock        : 864 ms
+  ✓  6 [chromium] › tests/benchmark.spec.ts:202:7 › [redux] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) (1.0s)
+
+  6 passed (4.2s)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: redux  (run 2 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1445ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.02 kB         113 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              1.86 kB         112 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=2 route=2.02kB  first_load=113kB  shared=102kB  library_delta=11.00kB  gzip_total=247.42kB
+→ Skipping E2E (replication run 2 — bundle-size verification only)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: redux  (run 3 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1479ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.02 kB         113 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              1.86 kB         112 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=3 route=2.02kB  first_load=113kB  shared=102kB  library_delta=11.00kB  gzip_total=247.42kB
+→ Skipping E2E (replication run 3 — bundle-size verification only)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: zustand  (run 1 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1365ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.47 kB         105 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              2.32 kB         104 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=1 route=2.47kB  first_load=105kB  shared=102kB  library_delta=3.00kB  gzip_total=240.51kB
+→ Starting production server…
+→ Waiting for production server on :3000…
+
+> state-management-benchmark@0.1.0 start /Users/kvashaihor/Projects/state-management-benchmark
+> next start
+
+   ▲ Next.js 15.5.14
+   - Local:        http://localhost:3000
+   - Network:      http://10.0.0.24:3000
+
+ ✓ Starting...
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+ ✓ Ready in 185ms
+→ Running Playwright benchmarks…
+
+Running 6 tests using 1 worker
+
+
+[zustand] counter — 50 increments
+  Dashboard renders : 50
+  DataTable renders : 0  ← ideally 0 (counter doesn't affect table)
+  DataTable span    : 0.0 ms (render-span from first to last record)
+  Wall-clock        : 870 ms
+  ✓  1 [chromium] › tests/benchmark.spec.ts:54:7 › [zustand] State Management Benchmarks › RQ1 — counter: 50 increments → render count (1.0s)
+
+[zustand] filter — typing "Alpha" (5 keystrokes)
+  Dashboard renders : 5
+  DataTable renders : 5
+  DataTable span    : 212.6 ms
+  Wall-clock        : 271 ms
+  ✓  2 [chromium] › tests/benchmark.spec.ts:90:7 › [zustand] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count (389ms)
+
+[zustand] selection — 20 row clicks
+  Dashboard renders : 20
+  DataTable renders : 20
+  DataTable span    : 346.5 ms
+  Wall-clock        : 358 ms
+  ✓  3 [chromium] › tests/benchmark.spec.ts:114:7 › [zustand] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count (475ms)
+
+[zustand] sort — 10 direction toggles
+  Dashboard renders : 10
+  DataTable renders : 10
+  DataTable span    : 179.6 ms
+  Wall-clock        : 192 ms
+  ✓  4 [chromium] › tests/benchmark.spec.ts:140:7 › [zustand] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count (306ms)
+
+[zustand] rows — 5 dataset refreshes
+  Dashboard renders : 5
+  DataTable renders : 5  ← all libraries subscribe to rows; all re-render
+  DataTable span    : 64.0 ms
+  Wall-clock        : 86 ms
+  ✓  5 [chromium] › tests/benchmark.spec.ts:166:7 › [zustand] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count (201ms)
+
+[zustand] nested counter — 50 increments (Shell → Panel → DataTable, depth 3)
+  Shell renders     : 50   ← uses useAppStore(); re-renders on every counter change
+  Panel renders     : 50   ← no React.memo; cascades from Shell's 50 re-renders
+  DataTable renders : 0  ← React.memo leaf; ideally 0 for selector-based libs
+  DataTable span    : 0.0 ms
+  Wall-clock        : 848 ms
+  ✓  6 [chromium] › tests/benchmark.spec.ts:202:7 › [zustand] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) (1.0s)
+
+  6 passed (3.9s)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: zustand  (run 2 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1343ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.47 kB         105 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              2.32 kB         104 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=2 route=2.47kB  first_load=105kB  shared=102kB  library_delta=3.00kB  gzip_total=240.51kB
+→ Skipping E2E (replication run 2 — bundle-size verification only)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: zustand  (run 3 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1340ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.47 kB         105 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              2.32 kB         104 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=3 route=2.47kB  first_load=105kB  shared=102kB  library_delta=3.00kB  gzip_total=240.51kB
+→ Skipping E2E (replication run 3 — bundle-size verification only)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: jotai  (run 1 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1351ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    1.98 kB         108 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              1.81 kB         108 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=1 route=1.98kB  first_load=108kB  shared=102kB  library_delta=6.00kB  gzip_total=243.05kB
+→ Starting production server…
+→ Waiting for production server on :3000…
+
+> state-management-benchmark@0.1.0 start /Users/kvashaihor/Projects/state-management-benchmark
+> next start
+
+   ▲ Next.js 15.5.14
+   - Local:        http://localhost:3000
+   - Network:      http://10.0.0.24:3000
+
+ ✓ Starting...
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+ ✓ Ready in 181ms
+→ Running Playwright benchmarks…
+
+Running 6 tests using 1 worker
+
+
+[jotai] counter — 50 increments
+  Dashboard renders : 50
+  DataTable renders : 0  ← ideally 0 (counter doesn't affect table)
+  DataTable span    : 0.0 ms (render-span from first to last record)
+  Wall-clock        : 863 ms
+  ✓  1 [chromium] › tests/benchmark.spec.ts:54:7 › [jotai] State Management Benchmarks › RQ1 — counter: 50 increments → render count (997ms)
+
+[jotai] filter — typing "Alpha" (5 keystrokes)
+  Dashboard renders : 5
+  DataTable renders : 5
+  DataTable span    : 210.5 ms
+  Wall-clock        : 269 ms
+  ✓  2 [chromium] › tests/benchmark.spec.ts:90:7 › [jotai] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count (388ms)
+
+[jotai] selection — 20 row clicks
+  Dashboard renders : 20
+  DataTable renders : 20
+  DataTable span    : 347.2 ms
+  Wall-clock        : 361 ms
+  ✓  3 [chromium] › tests/benchmark.spec.ts:114:7 › [jotai] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count (480ms)
+
+[jotai] sort — 10 direction toggles
+  Dashboard renders : 10
+  DataTable renders : 10
+  DataTable span    : 172.6 ms
+  Wall-clock        : 184 ms
+  ✓  4 [chromium] › tests/benchmark.spec.ts:140:7 › [jotai] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count (301ms)
+
+[jotai] rows — 5 dataset refreshes
+  Dashboard renders : 5
+  DataTable renders : 5  ← all libraries subscribe to rows; all re-render
+  DataTable span    : 64.0 ms
+  Wall-clock        : 86 ms
+  ✓  5 [chromium] › tests/benchmark.spec.ts:166:7 › [jotai] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count (201ms)
+
+[jotai] nested counter — 50 increments (Shell → Panel → DataTable, depth 3)
+  Shell renders     : 50   ← uses useAppStore(); re-renders on every counter change
+  Panel renders     : 50   ← no React.memo; cascades from Shell's 50 re-renders
+  DataTable renders : 0  ← React.memo leaf; ideally 0 for selector-based libs
+  DataTable span    : 0.0 ms
+  Wall-clock        : 856 ms
+  ✓  6 [chromium] › tests/benchmark.spec.ts:202:7 › [jotai] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) (1.0s)
+
+  6 passed (3.9s)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: jotai  (run 2 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1348ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    1.98 kB         108 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              1.81 kB         108 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=2 route=1.98kB  first_load=108kB  shared=102kB  library_delta=6.00kB  gzip_total=243.05kB
+→ Skipping E2E (replication run 2 — bundle-size verification only)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: jotai  (run 3 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1381ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    1.98 kB         108 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              1.81 kB         108 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=3 route=1.98kB  first_load=108kB  shared=102kB  library_delta=6.00kB  gzip_total=243.05kB
+→ Skipping E2E (replication run 3 — bundle-size verification only)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: context  (run 1 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1402ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.13 kB         104 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              1.97 kB         104 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=1 route=2.13kB  first_load=104kB  shared=102kB  library_delta=2.00kB  gzip_total=239.50kB
+→ Starting production server…
+→ Waiting for production server on :3000…
+
+> state-management-benchmark@0.1.0 start /Users/kvashaihor/Projects/state-management-benchmark
+> next start
+
+   ▲ Next.js 15.5.14
+   - Local:        http://localhost:3000
+   - Network:      http://10.0.0.24:3000
+
+ ✓ Starting...
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+ ✓ Ready in 182ms
+→ Running Playwright benchmarks…
+
+Running 6 tests using 1 worker
+
+
+[context] counter — 50 increments
+  Dashboard renders : 50
+  DataTable renders : 50  ← ideally 0 (counter doesn't affect table)
+  DataTable span    : 854.5 ms (render-span from first to last record)
+  Wall-clock        : 881 ms
+  ✓  1 [chromium] › tests/benchmark.spec.ts:54:7 › [context] State Management Benchmarks › RQ1 — counter: 50 increments → render count (1.0s)
+
+[context] filter — typing "Alpha" (5 keystrokes)
+  Dashboard renders : 5
+  DataTable renders : 5
+  DataTable span    : 211.7 ms
+  Wall-clock        : 269 ms
+  ✓  2 [chromium] › tests/benchmark.spec.ts:90:7 › [context] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count (388ms)
+
+[context] selection — 20 row clicks
+  Dashboard renders : 20
+  DataTable renders : 20
+  DataTable span    : 331.2 ms
+  Wall-clock        : 340 ms
+  ✓  3 [chromium] › tests/benchmark.spec.ts:114:7 › [context] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count (452ms)
+
+[context] sort — 10 direction toggles
+  Dashboard renders : 10
+  DataTable renders : 10
+  DataTable span    : 172.4 ms
+  Wall-clock        : 197 ms
+  ✓  4 [chromium] › tests/benchmark.spec.ts:140:7 › [context] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count (314ms)
+
+[context] rows — 5 dataset refreshes
+  Dashboard renders : 5
+  DataTable renders : 5  ← all libraries subscribe to rows; all re-render
+  DataTable span    : 64.4 ms
+  Wall-clock        : 85 ms
+  ✓  5 [chromium] › tests/benchmark.spec.ts:166:7 › [context] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count (201ms)
+
+[context] nested counter — 50 increments (Shell → Panel → DataTable, depth 3)
+  Shell renders     : 50   ← uses useAppStore(); re-renders on every counter change
+  Panel renders     : 50   ← no React.memo; cascades from Shell's 50 re-renders
+  DataTable renders : 50  ← React.memo leaf; ideally 0 for selector-based libs
+  DataTable span    : 838.7 ms
+  Wall-clock        : 856 ms
+  ✓  6 [chromium] › tests/benchmark.spec.ts:202:7 › [context] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) (1.0s)
+
+  6 passed (3.9s)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: context  (run 2 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1324ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.13 kB         104 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              1.97 kB         104 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=2 route=2.13kB  first_load=104kB  shared=102kB  library_delta=2.00kB  gzip_total=239.50kB
+→ Skipping E2E (replication run 2 — bundle-size verification only)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Library: context  (run 3 / 3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Clearing build cache…
+→ Building…
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/package-lock.json
+
+   ▲ Next.js 15.5.14
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1328ms
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.13 kB         104 kB
+├ ○ /_not-found                            996 B         103 kB
+└ ○ /nested                              1.97 kB         104 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-38b49df12a94ee57.js         46 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)  prerendered as static content
+
+→ Bundle: run=3 route=2.13kB  first_load=104kB  shared=102kB  library_delta=2.00kB  gzip_total=239.50kB
+→ Skipping E2E (replication run 3 — bundle-size verification only)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅  Benchmark complete
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Bundle sizes (results/bundle-sizes.csv):
+  route_size_kb  = JS unique to the / route
+  library_delta_kb = first_load − shared  ← the RQ1 number
+run  library  route_size_kb  first_load_kb  shared_kb  library_delta_kb  gzip_total_bytes  gzip_total_kb
+1    redux    2.02           113            102        11.00             253353            247.42
+2    redux    2.02           113            102        11.00             253353            247.42
+3    redux    2.02           113            102        11.00             253353            247.42
+1    zustand  2.47           105            102        3.00              246282            240.51
+2    zustand  2.47           105            102        3.00              246282            240.51
+3    zustand  2.47           105            102        3.00              246282            240.51
+1    jotai    1.98           108            102        6.00              248885            243.05
+2    jotai    1.98           108            102        6.00              248885            243.05
+3    jotai    1.98           108            102        6.00              248885            243.05
+1    context  2.13           104            102        2.00              245252            239.50
+2    context  2.13           104            102        2.00              245252            239.50
+3    context  2.13           104            102        2.00              245252            239.50
+
+Render counts are in results/playwright-{library}.log
+  grep for '[redux]', '[zustand]' etc. to compare

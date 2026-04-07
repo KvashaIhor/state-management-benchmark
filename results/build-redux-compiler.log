@@ -1,0 +1,45 @@
+
+> state-management-benchmark@0.1.0 build /Users/kvashaihor/Projects/state-management-benchmark
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kvashaihor/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/kvashaihor/Projects/state-management-benchmark/pnpm-lock.yaml
+
+   ▲ Next.js 15.5.0
+   - Experiments (use with caution):
+     ✓ reactCompiler
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 2.0s
+   Linting and checking validity of types ...
+
+ ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+   Collecting page data ...
+   Generating static pages (0/8) ...
+   Generating static pages (2/8) 
+   Generating static pages (4/8) 
+   Generating static pages (6/8) 
+ ✓ Generating static pages (8/8)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    3.28 kB         113 kB
+├ ○ /_not-found                            990 B         103 kB
+├ ○ /atom-family                         4.94 kB         107 kB
+├ ○ /deep                                2.75 kB         113 kB
+├ ƒ /k-consumer                          2.97 kB         113 kB
+└ ○ /nested                              2.73 kB         112 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/169-b776cb0ed69a3e23.js       45.8 kB
+  ├ chunks/ccdb642b-8d75d12a6f6eac7d.js  54.2 kB
+  └ other shared chunks (total)          1.87 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -1,0 +1,96 @@
+
+Running 12 tests using 1 worker
+
+
+[redux-idiomatic] counter — 50 increments
+  Dashboard renders : 50
+  DataTable renders : 0  ← ideally 0 (counter doesn't affect table)
+  DataTable span    : 0.0 ms (render-span from first to last record)
+  Wall-clock        : 3340 ms
+  ✓  1 [webkit] › tests/benchmark.spec.ts:122:7 › [redux-idiomatic] State Management Benchmarks › RQ1 — counter: 50 increments → render count (4.2s)
+
+[redux-idiomatic] filter — typing "Alpha" (5 keystrokes)
+  Dashboard renders : 5
+  DataTable renders : 5
+  DataTable span    : 223.0 ms
+  Wall-clock        : 302 ms
+  ✓  2 [webkit] › tests/benchmark.spec.ts:158:7 › [redux-idiomatic] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count (962ms)
+
+[redux-idiomatic] selection — 20 row clicks
+  Dashboard renders : 20
+  DataTable renders : 20
+  DataTable span    : 1259.0 ms
+  Wall-clock        : 1302 ms
+  ✓  3 [webkit] › tests/benchmark.spec.ts:182:7 › [redux-idiomatic] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count (1.9s)
+
+[redux-idiomatic] sort — 10 direction toggles
+  Dashboard renders : 10
+  DataTable renders : 10
+  DataTable span    : 584.0 ms
+  Wall-clock        : 666 ms
+  ✓  4 [webkit] › tests/benchmark.spec.ts:208:7 › [redux-idiomatic] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count (1.3s)
+
+[redux-idiomatic] rows — 5 dataset refreshes
+  Dashboard renders : 5
+  DataTable renders : 5  ← all libraries subscribe to rows; all re-render
+  DataTable span    : 269.0 ms
+  Wall-clock        : 312 ms
+  ✓  5 [webkit] › tests/benchmark.spec.ts:234:7 › [redux-idiomatic] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count (964ms)
+
+[redux-idiomatic] nested counter — 50 increments (Shell → Panel → DataTable, depth 3)
+  Shell renders     : 50   ← uses useAppStore(); re-renders on every counter change
+  Panel renders     : 50   ← no React.memo; cascades from Shell's 50 re-renders
+  DataTable renders : 0  ← React.memo leaf; ideally 0 for selector-based libs
+  DataTable span    : 0.0 ms
+  Wall-clock        : 3322 ms
+  ✓  6 [webkit] › tests/benchmark.spec.ts:270:7 › [redux-idiomatic] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) (4.5s)
+
+[redux-idiomatic] patch — 10 single-field patches (row-0 value++)
+  Dashboard renders : 10
+  DataTable renders : 10  ← all libraries subscribe to rows ref; all re-render
+  DataTable span    : 603.0 ms
+  Wall-clock        : 639 ms
+  Note: Redux immer preserves unchanged row object references (structural sharing),
+        but DataTable subscribes to the rows *array* reference not individual rows.
+        A single-field patch replaces the array ref in all four libraries → 10 renders.
+  ✓  7 [webkit] › tests/benchmark.spec.ts:330:7 › [redux-idiomatic] State Management Benchmarks › RQ7 — partial row patch: 10 single-field patches → render count (1.3s)
+
+[redux-idiomatic] RQ8 K=3, 50 counter increments
+  Per-consumer renders : 0, 0, 0
+  Total surplus        : 0  ← Context: K×50=150; others: 0
+  ✓  8 [webkit] › tests/benchmark.spec.ts:377:7 › [redux-idiomatic] State Management Benchmarks › RQ8-K3 — 3 consumers, 50 counter increments → total surplus render count (4.5s)
+
+[redux-idiomatic] RQ8 K=10, 50 counter increments
+  Per-consumer renders : 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  Total surplus        : 0  ← Context: K×50=500; others: 0
+  ✓  9 [webkit] › tests/benchmark.spec.ts:404:7 › [redux-idiomatic] State Management Benchmarks › RQ8-K10 — 10 consumers, 50 counter increments → total surplus render count (4.5s)
+
+[redux-idiomatic] RQ9 deep tree — 50 increments (DeepShell → Layer1 → Layer2 → Layer3 → DataTable, depth 5)
+  DeepShell renders : 50
+  Layer1 renders    : 50
+  Layer2 renders    : 50
+  Layer3 renders    : 50
+  DataTable renders : 0  ← ideally 0 for selector-based libs
+  ✓  10 [webkit] › tests/benchmark.spec.ts:445:7 › [redux-idiomatic] State Management Benchmarks › RQ9 — deep tree: 50 counter increments → isolation at leaf (depth 5) (4.5s)
+
+[RQ10] Jotai atom families — 10 patches on row-0
+  AtomTable wrapper   : 0  ← should be 0 (stable rowIds)
+  RowCell-row-0       : 10  ← should be 10 (patched row)
+  RowCell-row-1       : 0  ← should be 0 (unpatched)
+  RowCell-row-50      : 0  ← should be 0 (unpatched)
+  RowCell-row-99      : 0  ← should be 0 (unpatched)
+  Total RowCell renders: 10  ← should be 10 (only patched row)
+  ✓  11 [webkit] › tests/benchmark.spec.ts:503:7 › RQ10 — Jotai atom families: per-row render isolation › RQ10 — 10 patches on row-0 → only RowCell-row-0 re-renders (1.3s)
+
+[redux-idiomatic] TIMING RQ1 DataTable render-span  N=1 total, N=0 steady-state:  mean=NaNms  95%CI=[NaN,NaN]  median=NaNms  IQR=±NaNms  raw=[]
+
+[redux-idiomatic] TIMING RQ2 DataTable render-span  N=1 total, N=0 steady-state:  mean=NaNms  95%CI=[NaN,NaN]  median=NaNms  IQR=±NaNms  raw=[]
+
+[redux-idiomatic] TIMING RQ3 DataTable render-span  N=1 total, N=0 steady-state:  mean=NaNms  95%CI=[NaN,NaN]  median=NaNms  IQR=±NaNms  raw=[]
+
+[redux-idiomatic] TIMING RQ4 DataTable render-span  N=1 total, N=0 steady-state:  mean=NaNms  95%CI=[NaN,NaN]  median=NaNms  IQR=±NaNms  raw=[]
+
+[redux-idiomatic] TIMING RQ5 DataTable render-span  N=1 total, N=0 steady-state:  mean=NaNms  95%CI=[NaN,NaN]  median=NaNms  IQR=±NaNms  raw=[]
+  ✓  12 [webkit] › tests/benchmark.spec.ts:575:7 › [redux-idiomatic] Render-span timing (N=1 runs, order randomized) › Timing — RQ1–RQ5 DataTable spans (randomized scenario order) (8.6s)
+
+  12 passed (39.2s)

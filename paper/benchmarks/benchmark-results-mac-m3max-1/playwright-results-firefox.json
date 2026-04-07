@@ -1,0 +1,359 @@
+{
+  "config": {
+    "configFile": "/Users/kvashaihor/Projects/state-management-benchmark/playwright.firefox.config.ts",
+    "rootDir": "/Users/kvashaihor/Projects/state-management-benchmark/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/kvashaihor/Projects/state-management-benchmark/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/kvashaihor/Projects/state-management-benchmark/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "results/playwright-results-firefox.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": {
+      "command": "echo \"ERROR: start the production server first\" && exit 1",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 10000
+    }
+  },
+  "suites": [
+    {
+      "title": "benchmark.spec.ts",
+      "file": "benchmark.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[context] State Management Benchmarks",
+          "file": "benchmark.spec.ts",
+          "line": 65,
+          "column": 6,
+          "specs": [
+            {
+              "title": "RQ1 — counter: 50 increments → render count",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1979,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n[context] counter — 50 increments\n  Dashboard renders : 50\n  DataTable renders : 50  ← ideally 0 (counter doesn't affect table)\n  DataTable span    : 1223.0 ms (render-span from first to last record)\n  Wall-clock        : 1279 ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-04T22:17:13.027Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fd0f79bca92272c89f59-89f9ecef458002ff3c53",
+              "file": "benchmark.spec.ts",
+              "line": 73,
+              "column": 7
+            },
+            {
+              "title": "RQ2 — filter: typing 5 chars → render count",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 521,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n[context] filter — typing \"Alpha\" (5 keystrokes)\n  Dashboard renders : 5\n  DataTable renders : 5\n  DataTable span    : 222.0 ms\n  Wall-clock        : 287 ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-04T22:17:15.514Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fd0f79bca92272c89f59-1131a4acf8d33b11c9bf",
+              "file": "benchmark.spec.ts",
+              "line": 109,
+              "column": 7
+            },
+            {
+              "title": "RQ3 — selection: clicking 20 rows → render count",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 725,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n[context] selection — 20 row clicks\n  Dashboard renders : 20\n  DataTable renders : 20\n  DataTable span    : 479.0 ms\n  Wall-clock        : 504 ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-04T22:17:16.042Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fd0f79bca92272c89f59-204f551f6c492eb7147f",
+              "file": "benchmark.spec.ts",
+              "line": 133,
+              "column": 7
+            },
+            {
+              "title": "RQ4 — sort: 10 direction toggles → render count",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 513,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n[context] sort — 10 direction toggles\n  Dashboard renders : 10\n  DataTable renders : 10\n  DataTable span    : 261.0 ms\n  Wall-clock        : 293 ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-04T22:17:16.773Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fd0f79bca92272c89f59-2a0a5eaf2f3e8a4d7aca",
+              "file": "benchmark.spec.ts",
+              "line": 159,
+              "column": 7
+            },
+            {
+              "title": "RQ5 — rows: 5 dataset refreshes → render count",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 358,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n[context] rows — 5 dataset refreshes\n  Dashboard renders : 5\n  DataTable renders : 5  ← all libraries subscribe to rows; all re-render\n  DataTable span    : 102.0 ms\n  Wall-clock        : 135 ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-04T22:17:17.297Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fd0f79bca92272c89f59-e2f918f06bb533859519",
+              "file": "benchmark.spec.ts",
+              "line": 185,
+              "column": 7
+            },
+            {
+              "title": "RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1541,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n[context] nested counter — 50 increments (Shell → Panel → DataTable, depth 3)\n  Shell renders     : 50   ← uses useAppStore(); re-renders on every counter change\n  Panel renders     : 50   ← no React.memo; cascades from Shell's 50 re-renders\n  DataTable renders : 50  ← React.memo leaf; ideally 0 for selector-based libs\n  DataTable span    : 1227.0 ms\n  Wall-clock        : 1258 ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-04T22:17:17.661Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fd0f79bca92272c89f59-ccde7f1e1b4d109e8291",
+              "file": "benchmark.spec.ts",
+              "line": 221,
+              "column": 7
+            },
+            {
+              "title": "RQ7 — partial row patch: 10 single-field patches → render count",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 490,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n[context] patch — 10 single-field patches (row-0 value++)\n  Dashboard renders : 10\n  DataTable renders : 10  ← all libraries subscribe to rows ref; all re-render\n  DataTable span    : 227.0 ms\n  Wall-clock        : 269 ms\n  Note: Redux immer preserves unchanged row object references (structural sharing),\n        but DataTable subscribes to the rows *array* reference not individual rows.\n        A single-field patch replaces the array ref in all four libraries → 10 renders.\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-04T22:17:19.207Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fd0f79bca92272c89f59-e615a5f144f30496a214",
+              "file": "benchmark.spec.ts",
+              "line": 281,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-04T22:17:12.639Z",
+    "duration": 7424.901000000001,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

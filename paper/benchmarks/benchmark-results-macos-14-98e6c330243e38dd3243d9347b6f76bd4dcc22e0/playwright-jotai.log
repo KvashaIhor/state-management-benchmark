@@ -1,0 +1,117 @@
+
+Running 15 tests using 1 worker
+
+
+[jotai] counter — 50 increments
+  Dashboard renders : 50
+  DataTable renders : 0  ← ideally 0 (counter doesn't affect table)
+  DataTable span    : 0.0 ms (render-span from first to last record)
+  Wall-clock        : 4166 ms
+  ✓  1 [chromium] › tests/benchmark.spec.ts:122:7 › [jotai] State Management Benchmarks › RQ1 — counter: 50 increments → render count (4.9s)
+
+[jotai] filter — typing "Alpha" (5 keystrokes)
+  Dashboard renders : 5
+  DataTable renders : 5
+  DataTable span    : 241.2 ms
+  Wall-clock        : 324 ms
+  ✓  2 [chromium] › tests/benchmark.spec.ts:158:7 › [jotai] State Management Benchmarks › RQ2 — filter: typing 5 chars → render count (982ms)
+
+[jotai] selection — 20 row clicks
+  Dashboard renders : 20
+  DataTable renders : 20
+  DataTable span    : 1435.6 ms
+  Wall-clock        : 1535 ms
+  ✓  3 [chromium] › tests/benchmark.spec.ts:182:7 › [jotai] State Management Benchmarks › RQ3 — selection: clicking 20 rows → render count (2.2s)
+
+[jotai] sort — 10 direction toggles
+  Dashboard renders : 10
+  DataTable renders : 10
+  DataTable span    : 1129.3 ms
+  Wall-clock        : 1322 ms
+  ✓  4 [chromium] › tests/benchmark.spec.ts:208:7 › [jotai] State Management Benchmarks › RQ4 — sort: 10 direction toggles → render count (1.9s)
+
+[jotai] rows — 5 dataset refreshes
+  Dashboard renders : 5
+  DataTable renders : 5  ← all libraries subscribe to rows; all re-render
+  DataTable span    : 515.2 ms
+  Wall-clock        : 652 ms
+  ✓  5 [chromium] › tests/benchmark.spec.ts:234:7 › [jotai] State Management Benchmarks › RQ5 — rows: 5 dataset refreshes → render count (1.3s)
+
+[jotai] nested counter — 50 increments (Shell → Panel → DataTable, depth 3)
+  Shell renders     : 50   ← uses useAppStore(); re-renders on every counter change
+  Panel renders     : 50   ← no React.memo; cascades from Shell's 50 re-renders
+  DataTable renders : 0  ← React.memo leaf; ideally 0 for selector-based libs
+  DataTable span    : 0.0 ms
+  Wall-clock        : 6496 ms
+  ✓  6 [chromium] › tests/benchmark.spec.ts:270:7 › [jotai] State Management Benchmarks › RQ6 — nested tree: 50 counter increments → isolation at leaf (depth 3) (7.7s)
+
+[jotai] patch — 10 single-field patches (row-0 value++)
+  Dashboard renders : 10
+  DataTable renders : 10  ← all libraries subscribe to rows ref; all re-render
+  DataTable span    : 958.7 ms
+  Wall-clock        : 1102 ms
+  Note: Redux immer preserves unchanged row object references (structural sharing),
+        but DataTable subscribes to the rows *array* reference not individual rows.
+        A single-field patch replaces the array ref in all four libraries → 10 renders.
+  ✓  7 [chromium] › tests/benchmark.spec.ts:330:7 › [jotai] State Management Benchmarks › RQ7 — partial row patch: 10 single-field patches → render count (1.7s)
+
+[jotai] RQ8 K=3, 50 counter increments
+  Per-consumer renders : 0, 0, 0
+  Total surplus        : 0  ← Context: K×50=150; others: 0
+  ✓  8 [chromium] › tests/benchmark.spec.ts:377:7 › [jotai] State Management Benchmarks › RQ8-K3 — 3 consumers, 50 counter increments → total surplus render count (7.3s)
+
+[jotai] RQ8 K=10, 50 counter increments
+  Per-consumer renders : 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  Total surplus        : 0  ← Context: K×50=500; others: 0
+  ✓  9 [chromium] › tests/benchmark.spec.ts:404:7 › [jotai] State Management Benchmarks › RQ8-K10 — 10 consumers, 50 counter increments → total surplus render count (7.3s)
+
+[jotai] RQ9 deep tree — 50 increments (DeepShell → Layer1 → Layer2 → Layer3 → DataTable, depth 5)
+  DeepShell renders : 50
+  Layer1 renders    : 50
+  Layer2 renders    : 50
+  Layer3 renders    : 50
+  DataTable renders : 0  ← ideally 0 for selector-based libs
+  ✓  10 [chromium] › tests/benchmark.spec.ts:445:7 › [jotai] State Management Benchmarks › RQ9 — deep tree: 50 counter increments → isolation at leaf (depth 5) (7.3s)
+
+[RQ10] Jotai atom families — 10 patches on row-0
+  AtomTable wrapper   : 0  ← should be 0 (stable rowIds)
+  RowCell-row-0       : 10  ← should be 10 (patched row)
+  RowCell-row-1       : 0  ← should be 0 (unpatched)
+  RowCell-row-50      : 0  ← should be 0 (unpatched)
+  RowCell-row-99      : 0  ← should be 0 (unpatched)
+  Total RowCell renders: 10  ← should be 10 (only patched row)
+  ✓  11 [chromium] › tests/benchmark.spec.ts:503:7 › RQ10 — Jotai atom families: per-row render isolation › RQ10 — 10 patches on row-0 → only RowCell-row-0 re-renders (2.1s)
+
+[jotai] RQ11 multi-panel counter — 50 increments
+  PanelA renders : 50  ← subscribed to counter; should be 50
+  PanelB renders : 0  ← subscribed to filter/sort/rows; should be 0 (selector-based)
+  PanelC renders : 0  ← subscribed to selection; should be 0 (selector-based)
+  Wall-clock     : 6208 ms
+  ✓  12 [chromium] › tests/benchmark.spec.ts:605:7 › [jotai] Multi-panel cross-slice isolation (RQ11--RQ13) › RQ11 — counter: 50 increments → PanelA=50, PanelB=0, PanelC=0 (6.8s)
+
+[jotai] RQ12 multi-panel filter — typing "Alpha" (5 keystrokes)
+  PanelA renders : 0  ← subscribed to counter; should be 0 (selector-based)
+  PanelB renders : 5  ← subscribed to filter/sort/rows; should be 5
+  PanelC renders : 0  ← subscribed to selection; should be 0 (selector-based)
+  Wall-clock     : 311 ms
+  ✓  13 [chromium] › tests/benchmark.spec.ts:636:7 › [jotai] Multi-panel cross-slice isolation (RQ11--RQ13) › RQ12 — filter: typing 5 chars → PanelA=0, PanelB=5, PanelC=0 (917ms)
+
+[jotai] RQ13 multi-panel selection — 20 row-0 toggles
+  PanelA renders : 0  ← subscribed to counter; should be 0 (selector-based)
+  PanelB renders : 0  ← subscribed to filter/sort/rows; should be 0 (selector-based)
+  PanelC renders : 20  ← subscribed to selection; should be 20
+  Wall-clock     : 2901 ms
+  ✓  14 [chromium] › tests/benchmark.spec.ts:665:7 › [jotai] Multi-panel cross-slice isolation (RQ11--RQ13) › RQ13 — selection: 20 row-0 toggles → PanelA=0, PanelB=0, PanelC=20 (3.6s)
+
+[jotai] TIMING RQ1 DataTable render-span  N=10 total, N=9 steady-state:  mean=0.0ms  95%CI=[0.0,0.0]  median=0.0ms  IQR=±0.0ms  raw=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+
+[jotai] TIMING RQ2 DataTable render-span  N=10 total, N=9 steady-state:  mean=245.3ms  95%CI=[240.4,250.2]  median=244.3ms  IQR=±5.3ms  raw=[248.6,244.3,249.9,240.8,243.3,255.6,233.0,248.5,243.9]
+
+[jotai] TIMING RQ3 DataTable render-span  N=10 total, N=9 steady-state:  mean=2252.3ms  95%CI=[2125.5,2379.1]  median=2244.5ms  IQR=±232.1ms  raw=[2134.3,2482.4,1974.5,2244.5,2333.3,2131.4,2170.5,2433.3,2366.4]
+
+[jotai] TIMING RQ4 DataTable render-span  N=10 total, N=9 steady-state:  mean=1158.7ms  95%CI=[1052.1,1265.3]  median=1191.1ms  IQR=±235.2ms  raw=[1360.9,1225.9,1191.1,1025.7,978.9,1075.9,1260.9,1013.2,1295.8]
+
+[jotai] TIMING RQ5 DataTable render-span  N=10 total, N=9 steady-state:  mean=488.9ms  95%CI=[419.3,558.5]  median=471.4ms  IQR=±116.2ms  raw=[442.4,383.7,637.0,544.2,379.2,471.4,428.0,525.6,588.5]
+  ✓  15 [chromium] › tests/benchmark.spec.ts:698:7 › [jotai] Render-span timing (N=10 runs, order randomized) › Timing — RQ1–RQ5 DataTable spans (randomized scenario order) (2.2m)
+
+  15 passed (3.1m)
